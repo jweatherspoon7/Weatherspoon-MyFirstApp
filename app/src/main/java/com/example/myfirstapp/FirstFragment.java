@@ -11,9 +11,12 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myfirstapp.databinding.FragmentFirstBinding;
 
-public class FirstFragment extends Fragment {
+public class FirstFragment extends Fragment
+{
 
     private FragmentFirstBinding binding;
+
+    private static int counter = 0; //use to store num of clicks for counterText
 
     @Override
     public View onCreateView(
@@ -22,24 +25,42 @@ public class FirstFragment extends Fragment {
     ) {
 
         binding = FragmentFirstBinding.inflate(inflater, container, false);
+
+        //set counter text
+        binding.counterText.setText(counter+"");
+
         return binding.getRoot();
 
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+        binding.clickButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
+            }
+        });
+
+        binding.toastButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                counter++;
+                binding.counterText.setText(counter+"");
             }
         });
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroyView()
+    {
         super.onDestroyView();
         binding = null;
     }
